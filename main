@@ -1,0 +1,56 @@
+  from tkinter import *
+
+def button_press(num):
+    global equation_text
+    equation_text = equation_text + str(num)
+    equation_label.set(equation_text)
+
+def equals():
+    global equation_text
+    try:
+        total = str(eval(equation_text))
+        equation_label.set(total)
+        equation_text = total   
+    except SyntaxError:
+        equation_label.set("Syntax Error")
+        equation_text = ""
+    except ZeroDivisionError:
+        equation_label.set("Arithmetic Error")
+        equation_text = ""
+
+def clear():
+    global equation_text
+    equation_label.set("")
+    equation_text = ""
+
+window = Tk()
+window.title("Calculator Program")
+window.geometry("520x750")
+window.configure(bg="#282c35")
+
+equation_text = ""
+equation_label = StringVar()
+
+label = Label(window, textvariable=equation_label, font=('Helvetica', 20), bg="#282c35", fg="white", width=16, height=2)
+label.grid(row=0, column=0, columnspan=4, pady=10)
+
+buttons = [
+    '7', '8', '9', '/',
+    '4', '5', '6', '*',
+    '1', '2', '3', '-',
+    '0', '.', '+', '='
+]
+
+row_val = 1
+col_val = 0
+
+for button in buttons:
+    Button(window, text=button, height=4, width=9, font=('Helvetica', 16), bg="#60656e", fg="white", command=lambda b=button: button_press(b) if b != '=' else equals()).grid(row=row_val, column=col_val, pady=5, padx=5)
+    col_val += 1
+    if col_val > 3:
+        col_val = 0
+        row_val += 1
+
+Button(window, text='Clear', height=4, width=12, font=('Helvetica', 16), bg="#ff5c5c", fg="white", command=clear).grid(row=row_val, column=0, columnspan=4, pady=5)
+
+window.mainloop()
