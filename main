@@ -1,4 +1,4 @@
-  from tkinter import *
+from tkinter import *
 
 def button_press(num):
     global equation_text
@@ -23,17 +23,21 @@ def clear():
     equation_label.set("")
     equation_text = ""
 
+# Vytvoření hlavního okna
 window = Tk()
-window.title("Calculator Program")
+window.title("Kalkulačka")
 window.geometry("520x750")
 window.configure(bg="#282c35")
 
+# Inicializace proměnných pro ukládání výrazu
 equation_text = ""
 equation_label = StringVar()
 
+# Vytvoření zobrazení výrazu
 label = Label(window, textvariable=equation_label, font=('Helvetica', 20), bg="#282c35", fg="white", width=16, height=2)
 label.grid(row=0, column=0, columnspan=4, pady=10)
 
+# Definice tlačítek kalkulačky
 buttons = [
     '7', '8', '9', '/',
     '4', '5', '6', '*',
@@ -44,6 +48,7 @@ buttons = [
 row_val = 1
 col_val = 0
 
+# Vytvoření tlačítek
 for button in buttons:
     Button(window, text=button, height=4, width=9, font=('Helvetica', 16), bg="#60656e", fg="white", command=lambda b=button: button_press(b) if b != '=' else equals()).grid(row=row_val, column=col_val, pady=5, padx=5)
     col_val += 1
@@ -51,6 +56,7 @@ for button in buttons:
         col_val = 0
         row_val += 1
 
+# Tlačítko pro vymazání výrazu
 Button(window, text='Clear', height=4, width=12, font=('Helvetica', 16), bg="#ff5c5c", fg="white", command=clear).grid(row=row_val, column=0, columnspan=4, pady=5)
 
 window.mainloop()
